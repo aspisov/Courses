@@ -1,0 +1,27 @@
+@startuml Railway Station
+class Station {
+    +Name : string <<PK>>
+    Tracks : integer
+}
+
+class City {
+    +Name : string <<PK>>
+    +Region : string <<PK>>
+}
+
+class Train {
+    +TrainNr : integer <<PK>>
+    Length : integer
+}
+
+class Route {
+    +id : integer <<PK>>
+    departure : string <<FK>>
+    arrival : string <<FK>>
+}
+
+
+City ||--o{ Station: "Lie_in"
+Train ||--|| Route: "Goes"
+Route }o--|| Station: "From"
+@enduml

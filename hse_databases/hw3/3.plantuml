@@ -1,0 +1,51 @@
+@startuml Hospital
+
+class Patient {
+    +PatientNr : integer <<PK>>
+    Name : string
+    Disease : string
+}
+
+class Room {
+    +RoomNr : integer <<PK>>
+    Beds : integer
+}
+
+class Station {
+    +StatnNr : integer <<PK>>
+    Name : string
+}
+
+class StationPersonnel {
+    +PersNr : integer <<PK>>
+    Name : string
+}
+
+class Caregiver {
+    +PersNr : integer <<PK>> <<FK>>
+    Qualification : string
+}
+
+class Doctor {
+    +PersNr : integer <<PK>> <<FK>>
+    Area : string
+    Rank : string
+}
+
+class Admission {
+    +id : integer <<PK>>
+    +PatientNr : integer <<FK>>
+    +RoomNr : integer <<FK>>
+    from : date
+    to : date
+}
+
+Patient ||--|| Admission: "is admitted in"
+Room ||--o{ Admission: "is in"
+Station ||--o{ Room : "has"
+StationPersonnel }o--|| Station : "works in"
+Caregiver --|| StationPersonnel : "is a"
+Doctor --|| StationPersonnel : "is a"
+Doctor ||--o{ Patient : "treats"
+
+@enduml
