@@ -1,51 +1,60 @@
 @startuml Hospital
 
 class Patient {
-    +PatientNr : integer <<PK>>
-    Name : string
-    Disease : string
+    +PatientNr : Integer <<PK>>
+    Name : String
+    Disease : String
 }
 
 class Room {
-    +RoomNr : integer <<PK>>
-    Beds : integer
+    +RoomNr : Integer <<PK>>
+    +StatNr : Integer <<FK>>
+    Beds : Integer
 }
 
 class Station {
-    +StatnNr : integer <<PK>>
-    Name : string
+    +StatNr : Integer <<PK>>
+    Name : String
 }
 
 class StationPersonnel {
-    +PersNr : integer <<PK>>
-    Name : string
+    +PersNr : Integer <<PK>>
+    +StatNr : Integer <<FK>>
+    Name : String
 }
 
 class Caregiver {
-    +PersNr : integer <<PK>> <<FK>>
-    Qualification : string
+    +PersNr : Integer <<PK, FK>>
+    Qualification : String
 }
 
 class Doctor {
-    +PersNr : integer <<PK>> <<FK>>
-    Area : string
-    Rank : string
+    +PersNr : Integer <<PK, FK>>
+    Area : String
+    Rank : String
 }
 
 class Admission {
-    +id : integer <<PK>>
-    +PatientNr : integer <<FK>>
-    +RoomNr : integer <<FK>>
-    from : date
-    to : date
+    +AdmissionId : Integer <<PK>>
+    +PatientNr : Integer <<FK>>
+    +RoomNr : Integer <<FK>>
+    from : Date
+    to : Date
 }
 
-Patient ||--|| Admission: "is admitted in"
-Room ||--o{ Admission: "is in"
-Station ||--o{ Room : "has"
-StationPersonnel }o--|| Station : "works in"
-Caregiver --|| StationPersonnel : "is a"
-Doctor --|| StationPersonnel : "is a"
-Doctor ||--o{ Patient : "treats"
+class Treatment {
+    +TreatmentId : Integer <<PK>>
+    +PatientNr : Integer <<FK>>
+    +DoctorPersNr : Integer <<FK>>
+}
+
+Patient "1" -- "N" Admission : "is admitted in"
+Room "1" -- "N" Admission : "hosts"
+Station "1" -- "N" Room : "has"
+Station "1" -- "N" StationPersonnel : "employs"
+StationPersonnel <|-- Caregiver : "is a"
+StationPersonnel <|-- Doctor : "is a"
+Doctor "1" -- "N" Treatment : "performs"
+Patient "1" -- "N" Treatment : "receives"
 
 @enduml

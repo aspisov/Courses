@@ -1,8 +1,11 @@
 @startuml Library System
 entity "BookCopy" {
-    +copy_id : integer <<PK>>
+    +copy_id : integer
+    +ISBN : string
     shelf_location : string
-    ISBN : string <<FK>>
+    --
+    PK (copy_id, ISBN)
+    FK (ISBN) references Book
 }
 
 entity "Book" {
@@ -11,6 +14,7 @@ entity "Book" {
     title : string
     author : string
     page_count : integer
+    publisher_id : integer <<FK>>
 }
 
 entity "Publisher" {
@@ -33,18 +37,26 @@ entity "Reader" {
     birth_date : date
 }
 
-entity "Record" {
+entity "Loan" {
     +loan_id : integer <<PK>>
     reader_id : integer <<FK>>
     copy_id : integer <<FK>>
+    ISBN : string <<FK>>
     checkout_date : date
     due_date : date
+    return_date : date
+}
+
+entity "Book_Category" {
+    +ISBN : string <<PK, FK>>
+    +category_id : integer <<PK, FK>>
 }
 
 Book ||--o{ BookCopy: "has"
-Book }o--o{ Publisher: "published by"
-Book }o--o{ Category: "belongs to"
+Book ||--|| Publisher: "published by"
+Book ||--o{ Book_Category: "has"
+Category ||--o{ Book_Category: "belongs to"
 Category ||--o{ Category : "is subcategory of"
-Reader ||--o{ Record : "borrows"
-BookCopy ||--o{ Record : "is borrowed in"
+Reader ||--o{ Loan : "borrows"
+BookCopy ||--o{ Loan : "is borrowed in"
 @enduml

@@ -1,27 +1,46 @@
-@startuml Railway Station
+@startuml Railway System
+
+' Entities
 class Station {
-    +Name : string <<PK>>
-    Tracks : integer
+  +Name : String <<PK>>
+  +Tracks : Integer
 }
 
 class City {
-    +Name : string <<PK>>
-    +Region : string <<PK>>
+  +Name : String <<PK>>
+  +Region : String
 }
 
 class Train {
-    +TrainNr : integer <<PK>>
-    Length : integer
+  +TrainNr : Integer <<PK>>
+  +Length : Integer
 }
 
-class Route {
-    +id : integer <<PK>>
-    departure : string <<FK>>
-    arrival : string <<FK>>
+' Relationships
+class Connected {
+  +StationName : String <<PK, FK>>
+  +TrainNr : Integer <<PK, FK>>
+  +Departure : Time
+  +Arrival : Time
 }
 
+class Start {
+  +StationName : String <<PK, FK>>
+  +TrainNr : Integer <<PK, FK>>
+}
 
-City ||--o{ Station: "Lie_in"
-Train ||--|| Route: "Goes"
-Route }o--|| Station: "From"
+class End {
+  +StationName : String <<PK, FK>>
+  +TrainNr : Integer <<PK, FK>>
+}
+
+' Relationships
+City "1" -- "N" Station : Lie_in >
+Station "1" -- "N" Connected
+Station "1" -- "N" Start
+Station "1" -- "N" End
+Train "1" -- "N" Connected
+Train "1" -- "N" Start
+Train "1" -- "N" End
+
 @enduml

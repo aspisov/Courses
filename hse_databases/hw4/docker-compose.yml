@@ -1,0 +1,34 @@
+services:
+  lib:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/postgres1:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+  railway:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/postgres2:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+  hospital:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/postgres3:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5434:5432"
