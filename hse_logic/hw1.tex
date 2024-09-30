@@ -1,0 +1,110 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{blue}}{\thesection}{1em}{}
+
+\title{\textbf{Домашнее задание 1}}
+\author{\textbf{Асписов Дмитрий Алексеевич БПИ226}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Задача 19}
+\textcolor{blue}{\textbf{Приведите к ДНФ формулу:}}
+\[
+(p \vee q) \rightarrow (p \vee \neg r)
+\]
+
+\textbf{Решение:}
+
+\begin{enumerate}[label=\arabic*., leftmargin=*]
+\item Преобразуем импликацию:
+   \[
+   (p \vee q) \rightarrow (p \vee \neg r) 
+   \equiv \neg (p \vee q) \vee (p \vee \neg r)
+   \]
+
+\item Применим правило Де Моргана:
+   \[
+   \neg (p \vee q) \equiv \neg p \wedge \neg q
+   \]
+
+\item Подставим в исходное выражение:
+   \[
+   (\neg p \wedge \neg q) \vee (p \vee \neg r)
+   \]
+
+\item Применим дистрибутивный закон:
+   \[
+   (\neg p \vee (p \vee \neg r)) \wedge (\neg q \vee (p \vee \neg r))
+   \]
+
+\item Упростим:
+   \begin{itemize}
+   \item $\neg p \vee (p \vee \neg r) \equiv \top \vee \neg r \equiv \top$
+   \item $\neg q \vee (p \vee \neg r)$ остаётся неизменным
+   \end{itemize}
+
+\item Итоговая ДНФ:
+   \[
+   \boxed{\neg q \vee p \vee \neg r}
+   \]
+\end{enumerate}
+
+
+\section*{Задача 20}
+\textcolor{blue}{\textbf{Докажите, что следующая формула является тавтологией для любого $n$:}}
+
+\[
+\bigwedge_{i=1}^{n+1} \bigvee_{j=1}^n p_{ij} \rightarrow \bigvee_{j=1}^n \bigvee_{i_1,i_2=1, i_1<i_2}^{n+1} (p_{i_1j} \wedge p_{i_2j}).
+\]
+
+\textbf{Решение:}
+
+Предположим, что матрица \(p\) размером \((n+1) \times n\) содержит элементы из нулей и единиц. (построим изоморфизм между множеством матриц и $p$.
+
+\begin{proof} (от противного)
+
+\begin{enumerate}[label=\arabic*., leftmargin=*]
+\item Предположим, что левая часть истинна, а правая — ложна.
+
+\item Левая часть: $\bigwedge_{i=1}^{n+1} \bigvee_{j=1}^n p_{ij}$
+   \begin{itemize}
+   \item В каждой строке матрицы $p$ есть хотя бы одна единица.
+   \end{itemize}
+
+\item Правая часть: $\bigvee_{j=1}^n \bigvee_{i_1, i_2=1, i_1<i_2}^{n+1} (p_{i_1j} \wedge p_{i_2j})$
+   \begin{itemize}
+   \item Ни в одном столбце нет двух единиц.
+   \end{itemize}
+
+\item Расставляем единицы:
+   \begin{itemize}
+   \item По одной в каждой строке.
+   \item Не более одной в каждом столбце.
+   \end{itemize}
+
+\item Противоречие:
+   \begin{itemize}
+   \item Строк $n+1$, столбцов $n$.
+   \item После заполнения $n$ столбцов, одна строка останется без единицы.
+   \end{itemize}
+
+\item Вывод: исходное предположение неверно.
+\end{enumerate}
+
+Следовательно, формула является тавтологией.
+\end{proof}
+\end{document}
