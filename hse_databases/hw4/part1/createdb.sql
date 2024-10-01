@@ -13,7 +13,7 @@ CREATE TABLE public.dataset (
   "quality"                 INT
 );
 
-COPY public.dataset(
+COPY public.dataset (
   "fixed acidity",
   "volatile acidity",
   "citric acid",
