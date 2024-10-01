@@ -1,0 +1,36 @@
+services:
+  library:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: "library"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./library_data:/var/lib/postgresql/data
+      - ./library.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  railway:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: "railway"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./railway_data:/var/lib/postgresql/data
+      - ./railway.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+
+  hospital:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: "hospital"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./hospital_data:/var/lib/postgresql/data
+      - ./hospital.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5434:5432"
