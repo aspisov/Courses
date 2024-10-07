@@ -1,60 +1,60 @@
 @startuml Hospital
 
-class Patient {
-    +PatientNr : Integer <<PK>>
-    Name : String
-    Disease : String
+class Station {
+    StatNr : INTEGER <<PK>>
+    Name : VARCHAR(255)
 }
 
 class Room {
-    +RoomNr : Integer <<PK>>
-    +StatNr : Integer <<FK>>
-    Beds : Integer
-}
-
-class Station {
-    +StatNr : Integer <<PK>>
-    Name : String
+    RoomNr : INTEGER <<PK>>
+    StatNr : INTEGER <<PK, FK>>
+    Beds : INTEGER
 }
 
 class StationPersonnel {
-    +PersNr : Integer <<PK>>
-    +StatNr : Integer <<FK>>
-    Name : String
+    PersNr : INTEGER <<PK>>
+    StatNr : INTEGER <<PK, FK>>
+    Name : VARCHAR(255)
 }
 
 class Caregiver {
-    +PersNr : Integer <<PK, FK>>
-    Qualification : String
+    PersNr : INTEGER <<PK, FK>>
+    StatNr : INTEGER <<PK, FK>>
+    Name : VARCHAR(255)
+    Qualification : VARCHAR(255)
 }
 
 class Doctor {
-    +PersNr : Integer <<PK, FK>>
-    Area : String
-    Rank : String
+    PersNr : INTEGER <<PK, FK>>
+    StatNr : INTEGER <<PK, FK>>
+    Name : VARCHAR(255)
+    Area : VARCHAR(255)
+    Rank : VARCHAR(255)
+}
+
+class Patient {
+    PatientNr : INTEGER <<PK>>
+    Name : VARCHAR(255)
+    Disease : VARCHAR(255)
+    PersNr : INTEGER <<FK>>
+    StatNr : INTEGER <<FK>>
 }
 
 class Admission {
-    +AdmissionId : Integer <<PK>>
-    +PatientNr : Integer <<FK>>
-    +RoomNr : Integer <<FK>>
-    from : Date
-    to : Date
+    PatientNr : Integer <<FK>>
+    RoomNr : INTEGER <<PK, FK>>
+    StatNr : INTEGER <<PK, FK>>
+    from : DATE
+    to : DATE
 }
 
-class Treatment {
-    +TreatmentId : Integer <<PK>>
-    +PatientNr : Integer <<FK>>
-    +DoctorPersNr : Integer <<FK>>
-}
 
-Patient "1" -- "N" Admission : "is admitted in"
-Room "1" -- "N" Admission : "hosts"
-Station "1" -- "N" Room : "has"
-Station "1" -- "N" StationPersonnel : "employs"
+Patient ||--|| Admission : "is admitted in"
+Room ||--o{ Admission : "hosts"
+Station ||--o{ Room : "has"
+Station ||--o{ StationPersonnel : "employs"
 StationPersonnel <|-- Caregiver : "is a"
 StationPersonnel <|-- Doctor : "is a"
-Doctor "1" -- "N" Treatment : "performs"
-Patient "1" -- "N" Treatment : "receives"
+Doctor ||--o{ Patient : treats
 
 @enduml

@@ -2,45 +2,53 @@
 
 ' Entities
 class Station {
-  +Name : String <<PK>>
-  +Tracks : Integer
+  StationName : VARCHAR(255) <<PK>>
+  Tracks : INTEGER
+  CityName : VARCHAR(255) <<PK, FK>>
+  Region : VARCHAR(255) <<PK, FK>>
 }
 
 class City {
-  +Name : String <<PK>>
-  +Region : String
+  CityName : VARCHAR(255) <<PK>>
+  Region : VARCHAR(255) <<PK>>
 }
 
 class Train {
-  +TrainNr : Integer <<PK>>
-  +Length : Integer
+  TrainNr : INTEGER <<PK>>
+  Length : INTEGER
 }
 
 ' Relationships
 class Connected {
-  +StationName : String <<PK, FK>>
-  +TrainNr : Integer <<PK, FK>>
-  +Departure : Time
-  +Arrival : Time
+  StationName : String <<PK, FK>>
+  CityName : VARCHAR(255) <<PK, FK>>
+  Region : VARCHAR(255) <<PK, FK>>
+  TrainNr : INTEGER <<PK, FK>>
+  Departure : TIME
+  Arrival : TIME
 }
 
 class Start {
-  +StationName : String <<PK, FK>>
-  +TrainNr : Integer <<PK, FK>>
+  StationName : String <<PK, FK>>
+  CityName : VARCHAR(255) <<PK, FK>>
+  Region : VARCHAR(255) <<PK, FK>>
+  TrainNr : INTEGER <<PK, FK>>
 }
 
 class End {
-  +StationName : String <<PK, FK>>
-  +TrainNr : Integer <<PK, FK>>
+  StationName : String <<PK, FK>>
+  CityName : VARCHAR(255) <<PK, FK>>
+  Region : VARCHAR(255) <<PK, FK>>
+  TrainNr : INTEGER <<PK, FK>>
 }
 
 ' Relationships
-City "1" -- "N" Station : Lie_in >
-Station "1" -- "N" Connected
-Station "1" -- "N" Start
-Station "1" -- "N" End
-Train "1" -- "N" Connected
-Train "1" -- "N" Start
-Train "1" -- "N" End
+City ||--o{ Station : Lie_in
+Station ||--o{ Connected
+Station ||--o{ Start
+Station ||--o{ End
+Train ||--o{ Connected
+Train ||--o{ Start
+Train ||--o{ End
 
 @enduml
