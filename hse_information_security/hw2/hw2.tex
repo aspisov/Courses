@@ -1,0 +1,106 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% Настройка заголовков
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{blue}}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{blue}}{\thesubsection}{1em}{}
+
+% Определение цвета для выделений
+\definecolor{myblue}{RGB}{25, 70, 145}
+\definecolor{mygreen}{RGB}{40, 150, 50}
+
+% Установка гиперссылок
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myblue,
+    urlcolor=myblue
+}
+
+% Оформление задачи
+\newcommand{\zadacha}[2]{\section*{Задача #1} \textcolor{myblue}{\textbf{#2}}}
+
+\author{\textbf{Асписов Дмитрий Алексеевич, БПИ226}}
+\date{\today}
+\title{\textbf{Домашнее задание 2}}
+
+\begin{document}
+
+\maketitle
+
+\zadacha{1}{Найдите решение системы сравнений:}
+\[
+\begin{cases}
+x \equiv 3 \ (\text{mod} \ 5) \\
+x \equiv 4 \ (\text{mod} \ 6) \\
+x \equiv 5 \ (\text{mod} \ 7)
+\end{cases}
+\]
+
+\subsection*{Решение:}
+
+1. Находим значения произведений модулей \(M_i\):
+\[
+M = 5 \times 6 \times 7 = 210
+\]
+\[
+M_1 = \frac{M}{5} = 42, \quad M_2 = \frac{M}{6} = 35, \quad M_3 = \frac{M}{7} = 30
+\]
+
+2. Решаем для \(N_i\) из уравнений:
+\[
+\begin{aligned}
+&42 \times N_1 \equiv 1\ (\text{mod} \ 5) \quad \Rightarrow 2 \times N_1 \equiv 1\ (\text{mod} \ 5) \quad \Rightarrow N_1 = 3, \\
+&35 \times N_2 \equiv 1\ (\text{mod} \ 6) \quad \Rightarrow 5 \times N_2 \equiv 1\ (\text{mod} \ 6) \quad \Rightarrow N_2 = 5, \\
+&30 \times N_3 \equiv 1\ (\text{mod} \ 7) \quad \Rightarrow 2 \times N_3 \equiv 1\ (\text{mod} \ 7) \quad \Rightarrow N_3 = 4.
+\end{aligned}
+\]
+
+3. Находим \(x\):
+\[
+x = (3 \cdot 42 \cdot 3) + (4 \cdot 35 \cdot 5) + (5 \cdot 30 \cdot 4) = 378 + 700 + 600 = 1678
+\]
+Запишем решение в виде сравнения по модулю:
+\[
+x \equiv 1678 \ (\text{mod} \ 210)
+\]
+\[
+\boxed{x \equiv 208\ (\text{mod}\ 210)}
+\]
+
+\zadacha{2}{Сколько решений в \(\mathbb{Z}_5\) имеет система \(x \equiv 3y \ (\text{mod} \ 5)\)?}
+
+\subsection*{Решение:}
+
+Рассмотрим все возможные значения \(y\) в \(\mathbb{Z}_5\) и найдём соответствующие \(x\):
+\[
+\begin{aligned}
+&1)\ y = 0 \implies x = 3 \times 0 \equiv 0 \ (\text{mod} \ 5), \\
+&2)\ y = 1 \implies x = 3 \times 1 \equiv 3 \ (\text{mod} \ 5), \\
+&3)\ y = 2 \implies x = 3 \times 2 \equiv 1 \ (\text{mod} \ 5), \\
+&4)\ y = 3 \implies x = 3 \times 3 \equiv 4 \ (\text{mod} \ 5), \\
+&5)\ y = 4 \implies x = 3 \times 4 \equiv 2 \ (\text{mod} \ 5).
+\end{aligned}
+\]
+Таким образом, для каждого значения \(y\) существует уникальное значение \(x\). Поскольку \(y\) может принимать 5 различных значений в \(\mathbb{Z}_5\), получаем:
+\[
+\boxed{5 \text{ решений в } \mathbb{Z}_5}
+\]
+
+\zadacha{3}{Может ли при составном \(n\) выполняться сравнение \((n-1)! \equiv -1 \ (\text{mod} \ n)\)?}
+
+\subsection*{Решение:}
+
+
+
+\end{document}

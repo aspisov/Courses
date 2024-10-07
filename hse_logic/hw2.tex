@@ -1,0 +1,90 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{blue}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{blue}}{\thesubsection}{1em}{}
+
+\definecolor{myblue}{RGB}{25, 70, 145}
+\definecolor{mygreen}{RGB}{40, 150, 50}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myblue,
+    urlcolor=myblue
+}
+
+\newcommand{\zadacha}[2]{\section*{Задача #1} \textcolor{myblue}{\textbf{#2}}}
+
+\author{\textbf{Асписов Дмитрий Алексеевич, БПИ226}}
+\date{\today}
+\title{\textbf{Домашнее задание 2}}
+
+\begin{document}
+
+\maketitle
+
+\zadacha{4}{Построить вывод секвенции \( \Rightarrow (p \to q) \to ((\neg p \to q) \to q) \)}
+
+\subsection*{Решение:}
+
+\begin{enumerate}
+    \item Применяем правило импликации справа ($\to R$):
+    \[
+    \Rightarrow (p \to q) \to ((\neg p \to q) \to q)
+    \]
+    превращается в:
+    \[
+    p \to q \Rightarrow (\neg p \to q) \to q
+    \]
+    
+    \item Применяем правило импликации справа ($\to R$) для второй части:
+    \[
+    p \to q \Rightarrow \neg p \to q \Rightarrow q
+    \]
+    
+    \item Применяем правило импликации слева ($\to L$) к $p \to q$. Получаем два случая:
+    \[
+    \{p \Rightarrow q, \neg p \to q\} \quad \text{и} \quad \{\neg p \Rightarrow q, \neg p \to q\}
+    \]
+    
+    \item В первой ветви, секвенция $p \Rightarrow q, \neg p \to q$ выводима по правилу аксиомы ($p \Rightarrow p$), так как $p \to q$ и $p$ дают $q$.
+
+    \item Во второй ветви, секвенция $\neg p \Rightarrow q, \neg p \to q$ также выводима, так как $\neg p$ и $\neg p \to q$ дают $q$ через импликацию.
+\end{enumerate}
+
+Таким образом, вывод секвенции завершён.
+
+
+
+\zadacha{5}{Доказать, что секвенция \( \Rightarrow (p \to q) \to \neg p \) невыводима}
+
+\subsection*{Решение:}
+
+\begin{enumerate}
+    \item Рассмотрим структуру секвенции. Необходимо показать, что из $p \to q$ следует $\neg p$.
+    \item Применим правило импликации справа ($\to R$):
+    \[
+    p \to q \Rightarrow \neg p
+    \]
+    \item Секвенция $p \to q \Rightarrow \neg p$ утверждает, что если $p \to q$, то $p$ должно быть ложным. Однако, это невозможно вывести, так как:
+    \begin{itemize}
+        \item $p \to q$ означает лишь, что если $p$ истинно, то $q$ истинно, но это не даёт информации о том, что $p$ ложно.
+        \item Для вывода $\neg p$ нам нужно доказать ложность $p$, но $p \to q$ не подразумевает этого.
+    \end{itemize}
+    \item Следовательно, секвенция невыводима.
+\end{enumerate}
+
+Таким образом, данная секвенция не может быть доказана.
+
+
+\end{document}
