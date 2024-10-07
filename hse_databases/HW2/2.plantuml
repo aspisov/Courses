@@ -1,67 +1,42 @@
 @startuml Location and Relationships
 entity "Apartment" {
-  +apartment_id : integer <<PK>>
-  apartment_number : integer
-  house_id : integer <<FK>>
+
 }
 
 entity "House" {
-  +house_id : integer <<PK>>
-  house_number : integer
-  street_id : integer <<FK>>
-  city_id : integer <<FK>>
 }
 
 entity "Street" {
-  +street_id : integer <<PK>>
-  street_name : string
-  city_id : integer <<FK>>
+
 }
 
 entity "City" {
-  +city_id : integer <<PK>>
-  city_name : string
-  country_id : integer <<FK>>
+
 }
 
 entity "Country" {
-  +country_id : integer <<PK>>
-  country_name : string
+
 }
 
 entity "Team" {
-  +team_id : integer <<PK>>
-  team_name : string
+  team_id
 }
 
 entity "Referee" {
-    +referee_id : integer <<PK>>
-    person_id : integer <<FK>>
-}
-
-entity "Player" {
-  +player_id : integer <<PK>>
-  team_id : integer <<FK>>
-  person_id : integer <<FK>>
-  position : string
+    referee_id
 }
 
 entity "Match" {
-  +match_id : integer <<PK>>
-  match_date : date
-  home_team_id : integer <<FK>>
-  away_team_id : integer <<FK>>
-  referee_id : integer <<FK>>
-  result : string
+  match_id
+  team1_id
+  team2_id
+  referee_id
 }
 
-entity "Person" {
-  +person_id : integer <<PK>>
-  full_name : string
-  father_id : integer <<FK>>
-  mother_id : integer <<FK>>
-  city_id : integer <<FK>>
-  apartment_id : integer <<FK>>
+entity Male {
+}
+
+entity Female {
 }
 
 Apartment }o--|| House
@@ -69,15 +44,13 @@ House }o--|| Street
 Street }o--|| City
 City }o--|| Country
 
-Person }o--|| Person : father
-Person }o--|| Person : mother
-Person }o--|| Apartment : lives in
-
 Match }o--|| Team : home_team
 Match }o--|| Team : away_team
 Match }o--|| Referee
-Team |o--{ Player
-Player ||--|| Person
-Referee ||--|| Person
+
+Male }o--|| Male : is son of
+Male }o--|| Female : is son of
+Female }o--|| Male : is daughter of
+Female }o--|| Female : is daughter of
 
 @enduml

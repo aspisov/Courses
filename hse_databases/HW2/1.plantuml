@@ -1,50 +1,46 @@
 @startuml Library System
 entity "BookCopy" {
-    +copy_id : integer <<PK>>
-    shelf_location : string
-    ISBN : string <<FK>>
+    copy_number
+    ISBN
+    shelf_location
 }
 
 entity "Book" {
-    +ISBN : string <<PK>>
-    publication_year : integer
-    title : string
-    author : string
-    page_count : integer
+    ISBN
+    publication_year
+    title
+    author
+    page_count
 }
 
 entity "Publisher" {
-    +publisher_id : integer <<PK>>
-    name : string
-    address : string
+    name
+    address
 }
 
 entity "Category" {
-    +category_id : integer <<PK>>
-    name : string
-    parent_category_id : integer <<FK>>
+    name
 }
 
 entity "Reader" {
-    +reader_id : integer <<PK>>
-    last_name : string
-    first_name : string
-    address : string
-    birth_date : date
+    reader_id
+    last_name
+    first_name
+    address
+    birth_date
 }
 
 entity "Record" {
-    +loan_id : integer <<PK>>
-    reader_id : integer <<FK>>
-    copy_id : integer <<FK>>
-    checkout_date : date
-    due_date : date
+    reader_id
+    copy_id
+    ISBN
+    return_date
 }
 
 Book ||--o{ BookCopy: "has"
-Book }o--o{ Publisher: "published by"
+Book }o--|| Publisher: "published by"
 Book }o--o{ Category: "belongs to"
-Category ||--o{ Category : "is subcategory of"
+Category |o--o{ Category : "is subcategory of"
 Reader ||--o{ Record : "borrows"
 BookCopy ||--o{ Record : "is borrowed in"
 @enduml
