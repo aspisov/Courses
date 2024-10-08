@@ -101,6 +101,26 @@ x \equiv 1678 \ (\text{mod} \ 210)
 
 \subsection*{Решение:}
 
+Нет, не можем.
 
+\begin{proof} 
+
+Поскольку $n$ — составное, мы можем его представить в виде: 
+\[
+n=p_1^{\alpha_1} \cdots p_k^{\alpha_k}
+\]
+
+Рассмотрим 3 случая:
+\begin{align*}
+	&1)\quad \text{Пусть } k > 1, \text{ тогда } p_1^{\alpha_1} \cdots p_k^{\alpha_k} \text{ входят в } (n-1)! \text{ и } (n-1)!\equiv0\ (\mathrm{mod}\ n) \\
+	&2)\quad \text{Пусть } k = 1,\ \alpha > 2, \text{ тогда в } (n-1)! \text{ войдут } p^{\alpha - 1},\ p \implies (n-1)! \equiv 0\ (\text{mod}\ n) \\
+	&3)\quad \text{Пусть } k= 1,\ \alpha=2, \text{тогда мы получаем ещё два случая}: \\
+	&\qquad\qquad 1.\quad p =2\implies n =4 \implies (n-1)! = 6 \equiv 2\ (\text{mod } 4)\\ 
+	&\qquad\qquad 2.\quad p > 2 \implies p \text{ и } 2p \text{ входят в } (n-1)! \implies (n-1)! \equiv 0\ (\text{mod }n)
+\end{align*}
+
+Таким образом мы получили, что не существует составного $n: (n-1)!\equiv -1\ (\text{mod } n)$
+
+\end{proof}
 
 \end{document}
