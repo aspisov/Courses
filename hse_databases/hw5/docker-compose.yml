@@ -10,3 +10,14 @@ services:
       - ./lib.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5437:5432"
+  train:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: "train"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./train_data:/var/lib/postgresql/data
+      - ./train/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5438:5432"

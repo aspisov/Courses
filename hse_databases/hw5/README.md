@@ -68,3 +68,41 @@ WHERE B.ISBN IN (SELECT ISBN
 ```
 Output:
 ![1e.png](attachments/1e.png)
+
+## Task 2
+а) Найдите все прямые рейсы из Москвы в Тверь. <br>
+
+```sql
+SELECT c.*
+FROM Connection c
+         JOIN Station fs ON c.FromStation = fs.Name
+         JOIN Station ts ON c.ToStation = ts.Name
+WHERE fs.CityName = 'Москва'
+  AND ts.CityName = 'Тверь'
+  AND NOT EXISTS (SELECT 1
+                  FROM Connection c1
+                  WHERE c1.TrainNr = c.TrainNr
+                    AND c1.FromStation = c.FromStation
+                    AND c1.Departure > c.Departure
+                    AND c1.Arrival < c.Arrival
+                    AND c1.ToStation <> c.ToStation);
+```
+Output:
+![2a.png](attachments/2a.png)
+
+б) Найдите все многосегментные маршруты, имеющие точно однодневный трансфер из Москвы в Санкт-Петербург (первое отправление и прибытие в конечную точку должны быть в одну и ту же дату). Вы можете применить функцию DAY () к атрибутам Departure и Arrival, чтобы определить дату. <br>
+
+```sql
+WITH MultisegmentRoutes AS (SELECT c1.trainnr as id, fs.cityname as f, ts.cityname as t, c1.departure as dep, c2.arrival as arr
+                            FROM connection c1
+                                     JOIN connection c2 on c1.tostation = c2.fromstation
+                                     JOIN station fs on c1.fromstation = fs.name
+                                     JOIN station ts on c2.tostation = ts.name
+                            WHERE fs.cityname = 'Москва'
+                              and ts.cityname = 'Санкт-Петербург')
+SELECT id, f, t, dep, arr
+FROM MultisegmentRoutes
+WHERE DATE(dep) = DATE(arr)
+```
+Output:
+![2b.png](attachments/2b.png)
