@@ -1,0 +1,12 @@
+services:
+  lib:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: "lib"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./lib_data:/var/lib/postgresql/data
+      - ./sql/library/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5441:5432"

@@ -1,0 +1,36 @@
+{
+  "os":  "macOS-14.6.1-arm64-arm-64bit",
+  "python":  "3.12.4",
+  "startedAt":  "2024-10-16T11:56:35.829401Z",
+  "program":  "/Users/dimaaspisov/Desktop/GitHub/courses/ysda_speech/week_02_vad_sed/homework.ipynb",
+  "git":  {
+    "remote":  "https://github.com/aspisov/courses",
+    "commit":  "073783b09fa3797c860119cf88f372f88a43187d"
+  },
+  "email":  "aspisovv@gmail.com",
+  "root":  "/Users/dimaaspisov/Desktop/GitHub/courses/ysda_speech/week_02_vad_sed",
+  "host":  "Dimas-MacBook-Pro.local",
+  "username":  "dimaaspisov",
+  "executable":  "/opt/anaconda3/bin/python",
+  "codePathLocal":  "homework.ipynb",
+  "cpu_count":  11,
+  "cpu_count_logical":  11,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "120920363008"
+    }
+  },
+  "memory":  {
+    "total":  "19327352832"
+  },
+  "cpu":  {
+    "count":  11,
+    "countLogical":  11
+  },
+  "gpuapple":  {
+    "gpuType":  "Apple M3 Pro",
+    "vendor":  "sppci_vendor_Apple",
+    "cores":  14
+  }
+}
