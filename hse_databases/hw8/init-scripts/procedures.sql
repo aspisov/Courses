@@ -98,3 +98,86 @@ EXCEPTION
         ROLLBACK;
 END;
 $$;
+
+
+-- 4. Create GET_YEARS_SERVICE function
+CREATE OR REPLACE FUNCTION GET_YEARS_SERVICE(p_emp_id INTEGER)
+RETURNS NUMERIC
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_years NUMERIC;
+BEGIN
+    -- Check if employee exists
+    IF NOT EXISTS (SELECT 1 FROM employees WHERE employee_id = p_emp_id) THEN
+        RAISE EXCEPTION 'Employee ID % does not exist', p_emp_id;
+    END IF;
+
+    SELECT EXTRACT(YEAR FROM age(CURRENT_DATE, hire_date)) INTO v_years
+    FROM employees
+    WHERE employee_id = p_emp_id;
+
+    RETURN v_years;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error occurred: %', SQLERRM;
+        RETURN NULL;
+END;
+$$;
+
+-- 5. Create GET_JOB_COUNT function
+CREATE OR REPLACE FUNCTION GET_JOB_COUNT(p_emp_id INTEGER)
+RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_count INTEGER;
+BEGIN
+    -- Check if employee exists
+    IF NOT EXISTS (SELECT 1 FROM employees WHERE employee_id = p_emp_id) THEN
+        RAISE EXCEPTION 'Employee ID % does not exist', p_emp_id;
+    END IF;
+
+    SELECT COUNT(*) INTO v_count
+    FROM (
+        SELECT DISTINCT job_id
+        FROM job_history
+        WHERE employee_id = p_emp_id
+        UNION
+        SELECT job_id
+        FROM employees
+        WHERE employee_id = p_emp_id
+    ) jobs;
+
+    RETURN v_count;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error occurred: %', SQLERRM;
+        RETURN NULL;
+END;
+$$;
+
+
+-- 6. Create CHECK_SAL_RANGE trigger
+CREATE OR REPLACE FUNCTION check_salary_range()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM employees e
+        WHERE e.job_id = NEW.job_id
+        AND (e.salary < NEW.min_salary OR e.salary > NEW.max_salary)
+    ) THEN
+        RAISE EXCEPTION 'Salary range update would invalidate existing employee salaries';
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+CREATE OR REPLACE TRIGGER CHECK_SAL_RANGE
+BEFORE UPDATE OF min_salary, max_salary ON jobs
+FOR EACH ROW
+EXECUTE FUNCTION check_salary_range();
